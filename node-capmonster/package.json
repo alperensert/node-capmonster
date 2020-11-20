@@ -1,14 +1,25 @@
 {
   "name": "node-capmonster",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Unofficial capmonster.cloud module for NodeJS",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "capmonster",
+    "recaptcha",
+    "funcaptcha",
+    "imagetotext"
+  ],
   "author": "Alperen Sert",
   "license": "MIT",
+  "homepage": "https://github.com/alperensert/node-capmonster#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alperensert/node-capmonster.git",
+    "directory": "node-capmonster"
+  },
   "dependencies": {
     "axios": "^0.21.0"
   }
