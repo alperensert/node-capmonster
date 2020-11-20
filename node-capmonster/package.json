@@ -1,0 +1,15 @@
+{
+  "name": "node-capmonster",
+  "version": "0.1.1",
+  "description": "Unofficial capmonster.cloud module for NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Alperen Sert",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.0"
+  }
+}
