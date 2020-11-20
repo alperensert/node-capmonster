@@ -7,7 +7,7 @@ module.exports = class CapmonsterClient {
         this.TASK_RESULT_URL = "/getTaskResult"
         this.CREATE_TASK_URL = "/createTask"
         this.CAPMONSTER_URL = "https://api.capmonster.cloud"
-        this.SOFT_ID = 30
+        this.SOFT_ID = 32
     }
     async getBalance() {
         const response = (await axios.post(this.CAPMONSTER_URL + this.BALANCE_URL, {
