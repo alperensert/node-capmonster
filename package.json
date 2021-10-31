@@ -1,0 +1,50 @@
+{
+  "name": "node-capmonster",
+  "version": "0.2.0",
+  "description": "Capmonster.cloud module for NodeJS",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "capmonster", 
+    "recaptcha v2 solver",
+    "funcaptcha",
+    "hcaptcha",
+    "image-to-text",
+    "geetest",
+    "capmonster.cloud"
+  ],
+  "author": {
+    "name": "Alperen Sert",
+    "email": "mail@alperenn.com",
+    "url": "https://alperenn.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/alperensert/node-capmonster#readme",
+  "bugs": {
+    "url": "https://github.com/alperensert/node-capmonster/issues",
+    "email": "mail@alperenn.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alperensert/node-capmonster.git",
+    "directory": "node-capmonster"
+  },
+  "dependencies": {
+    "axios": "^0.24.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.2",
+    "jest": "^27.3.1",
+    "ts-jest": "^27.0.7",
+    "typescript": "^4.4.4",
+    "dotenv": "^10.0.0"
+  }
+}

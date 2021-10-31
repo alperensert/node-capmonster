@@ -1,0 +1,7 @@
+export * from "./capmonster"
+export { RecaptchaV2Task } from "./recaptcha_v2"
+export { FuncaptchaTask } from "./fun_captcha"
+export { GeeTestTask } from "./geetest"
+export { ImageToTextTask } from "./image_to_text"
+export { RecaptchaV3Task } from "./recaptcha_v3"
+export { HCaptchaTask } from "./hcaptcha"

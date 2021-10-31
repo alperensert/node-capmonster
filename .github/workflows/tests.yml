@@ -1,0 +1,41 @@
+name: Node.js Package Tests 📦
+
+on:
+  schedule:
+    - cron: '0 3 * * TUE'
+  push:
+    branches: 
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      max-parallel: 4
+      fail-fast: false
+      matrix:
+        node-version: [12.x, 14.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      
+      - name: Install setup dependencies & build the module
+        run: make ci
+
+      - name: Prepare test files
+        run: make prepare-test
+
+      - name: Test with Jest
+        run: make test
+        env:
+          KEY: ${{ secrets.capmonster_api_key }}
+          PROXY_TYPE: ${{ secrets.proxy_type }}
+          PROXY_PORT: ${{ secrets.proxy_port }}
+          PROXY_ADDRESS: ${{ secrets.proxy_address }}
+          PROXY_LOGIN: ${{ secrets.proxy_login }}
+          PROXY_PASSWORD: ${{ secrets.proxy_password }} 
