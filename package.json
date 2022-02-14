@@ -38,13 +38,13 @@
     "directory": "node-capmonster"
   },
   "dependencies": {
-    "axios": "^0.24.0"
+    "axios": "^0.26.0"
   },
   "devDependencies": {
-    "@types/jest": "^27.0.2",
-    "jest": "^27.3.1",
-    "ts-jest": "^27.0.7",
-    "typescript": "^4.4.4",
-    "dotenv": "^10.0.0"
+    "@types/jest": "^27.4.0",
+    "jest": "^27.5.1",
+    "ts-jest": "^27.1.3",
+    "typescript": "^4.5.5",
+    "dotenv": "^16.0.0"
   }
 }
