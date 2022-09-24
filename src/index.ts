@@ -1,5 +1,6 @@
 export * from "./capmonster"
 export { RecaptchaV2Task } from "./recaptcha_v2"
+export { RecaptchaV2EnterpriseTask } from "./recaptcha_v2_enterprise"
 export { FuncaptchaTask } from "./fun_captcha"
 export { GeeTestTask } from "./geetest"
 export { ImageToTextTask } from "./image_to_text"

@@ -1,6 +1,6 @@
 {
   "name": "node-capmonster",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Capmonster.cloud module for NodeJS",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -15,6 +15,7 @@
   "keywords": [
     "capmonster", 
     "recaptcha v2 solver",
+    "recaptcha v2 enterprise solver",
     "funcaptcha",
     "hcaptcha",
     "image-to-text",

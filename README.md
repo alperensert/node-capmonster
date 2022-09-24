@@ -50,4 +50,17 @@ capmonster.createTask("website_url", "website_key")
     })
 ```
 
+#### Recaptcha v2 enterprise
+
+```javascript
+const { RecaptchaV2EnterpriseTask } = require("node-capmonster")
+
+const capmonster = new RecaptchaV2EnterpriseTask("API_KEY")
+capmonster.createTask("website_url", "website_key", null, "payload", "api_domain", null)
+    .then((taskId) => {
+        capmonster.joinTaskResult(taskId)
+            .then((response) => console.log(response))
+    })
+```
+
 For other examples and api documentation please visit [wiki](https://github.com/alperensert/node-capmonster/wiki)
