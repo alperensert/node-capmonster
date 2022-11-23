@@ -39,7 +39,7 @@
     "directory": "node-capmonster"
   },
   "dependencies": {
-    "axios": "^0.26.0"
+    "axios": "^1.2.0"
   },
   "devDependencies": {
     "@types/jest": "^27.4.0",
