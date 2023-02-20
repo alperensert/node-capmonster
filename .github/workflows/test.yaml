@@ -3,6 +3,9 @@ name: 📦 Package Test
 on:
   push:
     branches: [master]
+    paths:
+      - src/**
+      - tests/**
   issues:
     types: [milestoned]
   pull_request:

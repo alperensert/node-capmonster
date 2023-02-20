@@ -23,17 +23,17 @@ module.exports = {
           gatsbyRemarkPlugins: [],
       },
   },
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `Rocket Docs`,
-        short_name: `Rocket Docs`,
-        start_url: `/`,
-        background_color: `#ffffff`,
-        display: `standalone`,
-        icon: `static/favicon.png`,
-      },
+  {
+    resolve: "gatsby-plugin-manifest",
+    options: {
+        name: "Node-Capmonster Docs",
+        short_name: "node-capmonster",
+        start_url: "/",
+        background_color: "#ffffff",
+        display: "standalone",
+        icon: "static/favicon.png",
     },
+},
     `gatsby-plugin-sitemap`,
     // {
     //   resolve: `gatsby-plugin-google-analytics`,
@@ -45,7 +45,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-canonical-urls`,
       options: {
-        siteUrl: `https://rocketdocs.netlify.app`,
+        siteUrl: "https://node-capmonster.alperen.io",
       },
     },
     `gatsby-plugin-offline`,
