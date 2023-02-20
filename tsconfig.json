@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "sourceMap": false,
+
+        /* Modules */
+        "module": "commonjs",
+        "rootDir": "src",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+
+        /* Emit */
+        "declaration": true,
+        "declarationMap": true,
+        "outDir": "dist",
+        "removeComments": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+
+        /* Type Checking */
+        "strict": true,
+        "strictNullChecks": true,
+        "skipLibCheck": true
+    },
+    "include": ["src"],
+    "exclude": ["node_modules", "dist", "docs"]
+}

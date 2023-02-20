@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node-terminal",
+            "name": "Docs develop",
+            "cwd": "${workspaceFolder}/docs",
+            "command": "yarn start",
+            "request": "launch",
+            "preLaunchTask": "yarn-start-docs"
+        }
+    ]
+}

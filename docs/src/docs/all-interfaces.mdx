@@ -1,0 +1,283 @@
+---
+title: All interfaces
+description: Learn more about interfaces which used in node-capmonster
+---
+
+## interfaces
+
+### IFuncaptchaTaskRequest
+
+```ts
+interface IFuncaptchaTaskRequest extends ITask {
+    type: "FunCaptchaTaskProxyless" | "FunCaptchaTask"
+    websiteURL: string
+    funcaptchaApiJSSubdomain?: string
+    websitePublicKey?: string
+    data?: string
+    cookies?: string
+    noCache?: boolean
+}
+```
+
+### IFuncaptchaTaskResponse
+
+```ts
+interface IFuncaptchaTaskResponse extends ITaskSolution {
+    token: string
+}
+```
+
+### IGeeTestTaskRequest
+
+```ts
+interface IGeeTestTaskRequest extends ITask {
+    type: "GeeTestTask" | "GeeTestTaskProxyless"
+    websiteURL: string
+    gt: string
+    challenge: string
+    geetestApiServerSubdomain?: string
+    geetestGetLib?: string
+    cookies?: string
+    noCache?: boolean
+}
+```
+
+### IGeeTestTaskResponse
+
+```ts
+interface IGeeTestTaskResponse extends ITaskSolution {
+    challenge: string
+    validate: string
+    seccode: string
+}
+```
+
+### IHCaptchaTaskRequest
+
+```ts
+interface IHCaptchaTaskRequest extends ITask {
+    type: "HCaptchaTask" | "HCaptchaTaskProxyless"
+    websiteURL: string
+    websiteKey: string
+    isInvisible?: boolean
+    data?: string
+    cookies?: string
+    noCache?: boolean
+}
+```
+
+### IHCaptchaTaskResponse
+
+```ts
+interface IHCaptchaTaskResponse extends ITaskSolution {
+    gRecaptchaResponse: string
+    respKey: string
+    userAgent: string
+}
+```
+
+### IImageToTextTaskRequest
+
+```ts
+interface IImageToTextTaskRequest extends ITask {
+    type: "ImageToTextTask"
+    body: string
+    CapMonsterModule?: string
+    recognizingThreshold?: number
+    Case?: boolean
+    numeric?: number
+    math?: boolean
+}
+```
+
+### IImageToTextTaskResponse
+
+```ts
+interface IImageToTextTaskResponse extends ITaskSolution {
+    text: string
+}
+```
+
+### IRecaptchaV2ETaskRequest
+
+```ts
+interface IRecaptchaV2ETaskRequest extends ITask {
+    type: "RecaptchaV2EnterpriseTaskProxyless" | "RecaptchaV2EnterpriseTask"
+    websiteURL: string
+    websiteKey: string
+    enterprisePayload?: string
+    apiDomain?: string
+    cookies?: string
+    noCache?: boolean
+}
+```
+
+### IRecaptchaV2ETaskResponse
+
+```ts
+interface IRecaptchaV2ETaskResponse extends ITaskSolution {
+    gRecaptchaResponse: string
+}
+```
+
+### IRecaptchaV2TaskRequest
+
+```ts
+interface IRecaptchaV2TaskRequest extends ITask {
+    type: "NoCaptchaTaskProxyless" | "NoCaptchaTask"
+    websiteURL: string
+    websiteKey: string
+    recaptchaDataSValue?: string
+    cookies?: string
+    noCache?: boolean
+}
+```
+
+### IRecaptchaV2TaskResponse
+
+```ts
+interface IRecaptchaV2TaskResponse extends ITaskSolution {
+    gRecaptchaResponse: string
+}
+```
+
+### IRecaptchaV3TaskRequest
+
+```ts
+interface IRecaptchaV3TaskRequest extends ITask {
+    type: "RecaptchaV3TaskProxyless"
+    websiteURL: string
+    websiteKey: string
+    minScore?: number
+    pageAction?: string
+    noCache?: boolean
+}
+```
+
+### IRecaptchaV3TaskResponse
+
+```ts
+interface IRecaptchaV3TaskResponse extends ITaskSolution {
+    gRecaptchaResponse: string
+}
+```
+
+### ITurnstileTaskRequest
+
+```ts
+interface ITurnstileTaskRequest extends ITask {
+    type: "TurnstileTaskProxyless" | "TurnstileTask"
+    websiteURL: string
+    websiteKey: string
+}
+```
+
+### ITurnstileTaskResponse
+
+```ts
+interface ITurnstileTaskResponse extends ITaskSolution {
+    token: string
+}
+```
+
+### IErrorResponse
+
+```ts
+interface IErrorResponse {
+    errorId: number
+    errorCode?: string
+    errorDescription?: string
+}
+```
+
+### IRequest
+
+```ts
+interface IRequest {
+    clientKey: string
+    callbackUrl: string
+    taskId: number
+}
+```
+
+### ITask
+
+```ts
+interface ITask {
+    type: string
+}
+```
+
+### ITaskSolution
+
+```ts
+interface ITaskSolution {}
+```
+
+### IUserAgentTaskRequest
+
+```ts
+interface IUserAgentTaskRequest {
+    userAgent?: string
+}
+```
+
+### IProxyTaskRequest
+
+```ts
+interface IProxyTaskRequest {
+    proxyType?: ProxyType
+    proxyAddress?: string
+    proxyPort?: number
+    proxyLogin?: string
+    proxyPassword?: string
+}
+```
+
+### IResponse
+
+```ts
+interface IResponse extends IErrorResponse {
+    balance?: number
+    taskId?: number
+    status?: "processing" | "ready"
+}
+```
+
+### ITaskResponse
+
+```ts
+interface ITaskResponse<T extends ITaskSolution>
+    extends IErrorResponse,
+        Pick<IResponse, "status"> {
+    solution?: T
+}
+```
+
+### ITaskRequest
+
+```ts
+interface ITaskRequest<T extends ITask> extends Pick<IRequest, "clientKey"> {
+    task: T
+}
+```
+
+## type
+
+### WithRequired
+
+```ts
+type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] }
+```
+
+### ProxyType
+
+```ts
+type ProxyType = "http" | "https" | "socks4" | "socks5"
+```
+
+### PartialBy
+
+```ts
+type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
+```

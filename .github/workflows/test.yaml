@@ -1,0 +1,38 @@
+name: 📦 Package Test
+
+on:
+  push:
+    branches: [master]
+  issues:
+    types: [milestoned]
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      fail-fast: false
+      matrix:
+        node-version: [14.x, 16.x, 18.x ]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install yarn package manager
+        run: npm install yarn --global
+
+      - name: Install packages via yarn
+        run: yarn
+
+      - name: Run eslint
+        run: yarn lint
+      
+      - name: Run tests
+        run: yarn test base.test.ts
+        env:
+          API_KEY: ${{ secrets.capmonster_api_key }}

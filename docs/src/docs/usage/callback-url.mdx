@@ -1,0 +1,42 @@
+---
+title: Callback URL
+description: Learn how to implement callback url with node-capmonster.
+---
+
+## What is it?
+
+Callback url is an option for sending task results to specified url.
+
+Optional web address where we will send result of captcha task processing.
+Contents are sent by `POST` request and are same to the contents of getTaskResult method.
+
+> The content of the response is not checked and you must accept the request
+> in 2 seconds then the connection will be closed.
+
+## How to set
+
+You can set the callback url with `setCallbackUrl` function, globally[\*](usage/callback-url#-all-created-tasks-will-created-with-callback-url).
+
+```js
+import { RecaptchaV2Task } from "node-capmonster"
+
+const client = new RecaptchaV2Task("<api_key>")
+client.setCallbackUrl("<link>")
+```
+
+###### \* All created tasks will created with callback url.
+
+## How to unset
+
+You can set the callback url with `unsetCallbackUrl` function.
+
+```js
+import { RecaptchaV2Task } from "node-capmonster"
+
+const client = new RecaptchaV2Task("<api_key>")
+client.setCallbackUrl("<link>")
+
+// do some work or just set and unset
+
+client.unsetCallbackUrl()
+```

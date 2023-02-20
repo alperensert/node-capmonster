@@ -1,0 +1,4 @@
+dist
+**/*.js
+**/.github
+yarn.lock

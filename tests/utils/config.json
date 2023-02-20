@@ -1,0 +1,45 @@
+{
+    "tasks": {
+        "reCaptchaV2": {
+            "websiteUrl": "https://lessons.zennolab.com/captchas/recaptcha/v2_simple.php?level=high",
+            "websiteKey": "6Lcg7CMUAAAAANphynKgn9YAgA4tQ2KI_iqRyTwd"
+        },
+        "reCaptchaV3": {
+            "websiteUrl": "https://lessons.zennolab.com/captchas/recaptcha/v3.php?level=beta",
+            "websiteKey": "6Le0xVgUAAAAAIt20XEB4rVhYOODgTl00d8juDob"
+        },
+        "hcaptcha": {
+            "websiteUrl": "https://lessons.zennolab.com/captchas/hcaptcha/?level=easy",
+            "websiteKey": "472fc7af-86a4-4382-9a49-ca9090474471"
+        },
+        "funcaptcha": {
+            "websiteUrl": "https://funcaptcha.com/fc/api/nojs/?pkey=69A21A01-CC7B-B9C6-0F9A-E7FA06677FFC",
+            "websitePublicKey": "69A21A01-CC7B-B9C6-0F9A-E7FA06677FFC",
+            "blob": "{\"blob\":\"dyXvXANMbHj1iDyz.Qj97JtSqR2n%2BuoY1V%2FbdgbrG7p%2FmKiqdU9AwJ6MifEt0np4vfYn6TTJDJEfZDlcz9Q1XMn9przeOV%2FCr2%2FIpi%2FC1s%3D\"}"
+        },
+        "turnstile": {
+            "websiteUrl": "http://tsmanaged.zlsupport.com",
+            "websiteKey": "0x4AAAAAAABUYP0XeMJF0xoy"
+        },
+        "imagetotext": {
+            "numericPath": "utils/numeric.png",
+            "numericExpected": "381057",
+            "textPath": "utils/text.png",
+            "textExpected": "fdamc",
+            "externalImageLink": "https://qph.fs.quoracdn.net/main-qimg-0025b2b485965ef8cb19e933bcc367e1",
+            "externalImageExpected": "w68hp"
+        }
+    },
+    "utils": {
+        "callbackUrl": "https://your-some-otherapi.com/sent-here",
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.2 Safari/605.1.15",
+        "fakeApiKey": "919005e3-161d-4094-9ca0-ae41e86debbd",
+        "fakeCookies": {
+            "dump1": "value1",
+            "dump2": "value2"
+        },
+        "fakeCookiesString": "dump1=value1;dump2=value2",
+        "fakeCookiesArray": ["dump1", "value1", "dump2", "value2"],
+        "expectedFakeCookies": "dump1=value1;dump2=value2"
+    }
+}

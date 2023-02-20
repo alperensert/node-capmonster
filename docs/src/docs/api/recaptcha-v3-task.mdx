@@ -1,0 +1,51 @@
+---
+title: class RecaptchaV3Task
+description: class RecaptchaV3Task API
+---
+
+## extend
+
+| Class            | Link                          |
+| ---------------- | ----------------------------- |
+| CapmonsterClient | [see](/api/capmonster-client) |
+
+## constructor
+
+| Parameter | Type   | Required | Default value | Purpose                           |
+| --------- | ------ | -------- | ------------- | --------------------------------- |
+| clientKey | string | Yes      | -             | Your unique key to solve captchas |
+
+## methods
+
+### async createTask
+
+_@returns_ **ID of the created task**
+
+| Parameter    | Type    | Required | Default value | Purpose                                                                                                                                                                                                    |
+| ------------ | ------- | -------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| websiteUrl   | string  | Yes      | -             | Address of a webpage with Google ReCaptcha                                                                                                                                                                 |
+| websiteKey   | string  | Yes      | -             | Recaptcha website key <br/><br/> _(google.com/recaptcha/api.js?render="THAT_ONE")_                                                                                                                         |
+| minimumScore | number  | No       | 0.3           | Value from 0.1 to 0.9                                                                                                                                                                                      |
+| pageAction   | string  | No       | verify        | Widget action value. Website owner defines what user is doing on the page through this parameter. <br/><br/> _e.g. grecaptcha.execute('site_key', {action:'login_test'})_                                  |
+| noCache      | boolean | No       | -             | You receive a token, send it to the site, but the site rejects it. Moreover, sometimes the site can accept a token, e.g. in one case out of 10 (_the percentage of success in your case may be different_) |
+
+> `createTask` function is deprecated. Will be remove in
+> the future. Please use `task` and `createWithTask` functions.
+
+### task
+
+Creates only the task configuration for reuseable tasks. <br/>
+_@returns_ **Omit<[IRecaptchaV3TaskRequest](/all-interfaces#irecaptchav3taskrequest), "type">**
+
+| Parameter | Type                                                                             | Required | Default value |
+| --------- | -------------------------------------------------------------------------------- | -------- | ------------- |
+| task      | Omit<[IRecaptchaV3TaskRequest](/all-interfaces#irecaptchav3taskrequest), "type"> | Yes      | -             |
+
+### async createWithtask
+
+Creates a recaptcha v3 task for solving. <br/>
+_@returns_ **ID of the created task**
+
+| Parameter | Type                                                                             | Required | Default value |
+| --------- | -------------------------------------------------------------------------------- | -------- | ------------- |
+| task      | Omit<[IRecaptchaV3TaskRequest](/all-interfaces#irecaptchav3taskrequest), "type"> | Yes      | -             |

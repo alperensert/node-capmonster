@@ -1,0 +1,29 @@
+name: 📦 Publish Package to NPM
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18.x"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: install yarn package manager
+        run: npm install yarn --global
+
+      - name: install packages via yarn
+        run: yarn
+
+      - name: Bump version to v${{  github.ref_name }}
+        run: npm version ${{  github.ref_name }} --git-tag-version false --allow-same-version
+
+      - name: publish package to npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm_access }}
