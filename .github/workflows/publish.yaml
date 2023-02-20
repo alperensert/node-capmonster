@@ -23,7 +23,10 @@ jobs:
       - name: Bump version to v${{  github.ref_name }}
         run: npm version ${{  github.ref_name }} --git-tag-version false --allow-same-version
 
+      - name: Build package
+        run: yarn build
+
       - name: publish package to npm
-        run: npm publish
+        run: npm publish --force
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_access }}
