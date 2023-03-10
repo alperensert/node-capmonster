@@ -5,6 +5,36 @@ description: Learn more about interfaces which used in node-capmonster
 
 ## interfaces
 
+### IComplexImageTaskRequest
+
+```ts
+interface IComplexImageTaskRequest extends ITask {
+    type: "ComplexImageTask"
+    class: "recaptcha" | "hcaptcha"
+    imageUrls?: string[]
+    imagesBase64?: string[]
+    metadata: RequireAtLeastOne<MetaData, "Task" | "TaskDefinition">
+}
+```
+
+### IComplexImageTaskRequest.MetaData
+
+```ts
+interface MetaData {
+    Grid?: string | "4x4" | "3x3" | "1x1"
+    TaskDefinition?: string
+    Task?: string
+}
+```
+
+### IComplexImageTaskResponse
+
+```ts
+interface IComplexImageTaskResponse extends ITaskSolution {
+    answer: boolean[]
+}
+```
+
 ### IFuncaptchaTaskRequest
 
 ```ts

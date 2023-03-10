@@ -28,6 +28,13 @@
             "textExpected": "fdamc",
             "externalImageLink": "https://qph.fs.quoracdn.net/main-qimg-0025b2b485965ef8cb19e933bcc367e1",
             "externalImageExpected": "w68hp"
+        },
+        "compleximageHCaptcha": {
+            "imageUrls": [
+                "https://i.postimg.cc/kg71cbRt/image-1.jpg",
+                "https://i.postimg.cc/6381Zx2j/image.jpg"
+            ],
+            "task": "Please click each image containing a mountain"
         }
     },
     "utils": {

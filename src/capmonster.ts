@@ -115,7 +115,7 @@ export class CapmonsterClient {
         return this.isReady(data) ? data.solution : null
     }
 
-    protected _joinTaskResult = async <T extends object>(
+    protected _joinTaskResult = async <T extends ITaskSolution>(
         taskId: number,
         timeout?: number
     ) => {
@@ -355,3 +355,11 @@ export interface IResponse extends IErrorResponse {
     taskId?: number
     status?: "processing" | "ready"
 }
+
+export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<
+    T,
+    Exclude<keyof T, Keys>
+> &
+    {
+        [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>
+    }[Keys]

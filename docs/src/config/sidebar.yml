@@ -8,6 +8,8 @@
   items:
       - label: "Image to Text"
         link: "/usage/image-to-text"
+      - label: "Complex Image (new)"
+        link: "/usage/complex-image"
       - label: "ReCAPTCHA V2"
         link: "/usage/recaptcha-v2"
       - label: "ReCAPTCHA V2 Enterprise"
@@ -30,6 +32,8 @@
         link: /api/capmonster-client
       - label: class CapmonsterError
         link: /api/capmonster-error
+      - label: class ComplexImageTask
+        link: /api/complex-image-task
       - label: class RecaptchaV2Task
         link: /api/recaptcha-v2-task
       - label: class GeeTestTask
