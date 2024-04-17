@@ -8,4 +8,10 @@ updates:
       - dependency-name: "axios"
     reviewers:
       - "alperensert"
+  - package-ecosystem: "npm"
+    directory: "/docs"
+    schedule:
+      interval: "weekly"
+    ignore:
+      - dependency-name: "*"
     
