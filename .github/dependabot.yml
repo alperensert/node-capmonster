@@ -6,6 +6,7 @@ updates:
       interval: "weekly"
     allow:
       - dependency-name: "axios"
+      - dependency-type: "production"
     reviewers:
       - "alperensert"
   - package-ecosystem: "npm"
