@@ -20,9 +20,6 @@ jobs:
       - name: install packages via yarn
         run: yarn
 
-      - name: Bump version to v${{  github.ref_name }}
-        run: npm version ${{  github.ref_name }} --git-tag-version false --allow-same-version
-
       - name: Build package
         run: yarn build
 
