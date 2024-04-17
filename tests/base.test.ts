@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="types.d.ts" />
-import { expect, jest, test } from "@jest/globals"
+import { RecaptchaV2Task } from "../src"
 import {
     CapmonsterClient,
     ITask,
     IUserAgentTaskRequest,
     UAProxy,
 } from "../src/capmonster"
-import { RecaptchaV2Task } from "../src"
 import { CapmonsterError } from "../src/capmonster_error"
 import { utils } from "./utils/config.json"
 
