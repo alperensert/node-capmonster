@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.4](https://github.com/alperensert/node-capmonster/compare/node-capmonster-v0.4.3...node-capmonster-v0.4.4) (2024-04-27)
+
+
+### Features
+
+* aws waf task support ([c663c4a](https://github.com/alperensert/node-capmonster/commit/c663c4ae6f535479c7f48dc4fa7832b83edfe725))
+
 ## [0.4.3](https://github.com/alperensert/node-capmonster/compare/node-capmonster-v0.4.2...node-capmonster-v0.4.3) (2024-04-17)
 
 
