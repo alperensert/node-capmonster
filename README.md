@@ -39,6 +39,8 @@ pnpm add node-capmonster
 -   Image to Text
 -   ReCAPTCHA v2 / v2 Enterprise / v3
 -   Turnstile
+-   TenDI
+-   AWS WAF
 
 ## Usage examples
 
