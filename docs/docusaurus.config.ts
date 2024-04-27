@@ -10,6 +10,8 @@ const config: Config = {
     baseUrl: "/",
     organizationName: "alperensert", // Usually your GitHub org/user name.
     projectName: "node-capmonster", // Usually your repo name.
+    deploymentBranch: "master",
+    trailingSlash: false,
     onBrokenLinks: "throw",
     onBrokenMarkdownLinks: "warn",
     i18n: {
