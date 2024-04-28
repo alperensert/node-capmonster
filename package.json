@@ -1,6 +1,6 @@
 {
     "name": "node-capmonster",
-    "version": "0.4.4",
+    "version": "0.4.5",
     "description": "Capmonster.cloud module for NodeJS",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
