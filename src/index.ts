@@ -1,6 +1,7 @@
 export { CapmonsterError } from "./capmonster_error"
 export { AmazonTask } from "./tasks/aws_waf"
 export { ComplexImageTask } from "./tasks/complex_image"
+export { DataDomeTask } from "./tasks/data_dome"
 export { FuncaptchaTask } from "./tasks/fun_captcha"
 export { GeeTestTask } from "./tasks/geetest"
 export { GeeTestV4Task } from "./tasks/geetest_v4"
