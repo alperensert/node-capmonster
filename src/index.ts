@@ -1,4 +1,5 @@
 export { CapmonsterError } from "./capmonster_error"
+export { AmazonTask } from "./tasks/aws_waf"
 export { ComplexImageTask } from "./tasks/complex_image"
 export { FuncaptchaTask } from "./tasks/fun_captcha"
 export { GeeTestTask } from "./tasks/geetest"
