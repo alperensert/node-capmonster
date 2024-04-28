@@ -33,6 +33,8 @@ jobs:
           node-version: 18
       - run: npm install -g pnpm
       - run: pnpm install
+        working-directory: .
+      - run: pnpm install
       - run: pnpm build
       - uses: actions/upload-pages-artifact@v3
         with:
