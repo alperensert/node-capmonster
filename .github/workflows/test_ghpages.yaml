@@ -1,0 +1,30 @@
+name: Test Documentation Deployment
+
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - docs/**
+
+defaults:
+  run:
+    shell: bash
+    working-directory: docs
+
+jobs:
+  test-deploy:
+    name: Test deployment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - run: npm install -g pnpm
+      - run: pnpm install
+        working-directory: .
+      - run: pnpm install
+      - run: pnpm build

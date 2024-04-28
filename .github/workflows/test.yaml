@@ -10,6 +10,9 @@ on:
     types: [milestoned]
   pull_request:
     types: [opened, reopened]
+    paths:
+      - src/**
+      - tests/**
 
 jobs:
   test:

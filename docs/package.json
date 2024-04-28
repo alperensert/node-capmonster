@@ -1,33 +1,50 @@
 {
-    "name": "gatsby-starter-rocketdocs",
+    "name": "node-capmonster-docs",
+    "version": "0.0.0",
     "private": true,
-    "version": "1.0.0",
-    "description": "Out of the box Gatsby Starter for creating documentation websites easily and quickly. With support for MDX, code highlight, Analytics, SEO and more",
-    "author": "João Pedro Schmitz <hey@joaopedro.dev> (@jpedroschmitz)",
-    "license": "MIT",
-    "starter-name": "gatsby-starter-rocketdocs",
-    "dependencies": {
-        "@rocketseat/gatsby-theme-docs": "^3.2.0",
-        "gatsby": "^4.2.0",
-        "gatsby-plugin-canonical-urls": "^4.2.0",
-        "gatsby-plugin-google-analytics": "^4.2.0",
-        "gatsby-plugin-manifest": "^4.2.0",
-        "gatsby-plugin-offline": "^5.2.0",
-        "gatsby-plugin-remove-trailing-slashes": "^4.2.0",
-        "gatsby-plugin-sitemap": "^5.2.0",
-        "prop-types": "^15.7.2",
-        "react": "^17.0.2",
-        "react-dom": "^17.0.2"
-    },
-    "devDependencies": {},
-    "keywords": [
-        "gatsby",
-        "gatsby-starter"
-    ],
     "scripts": {
-        "build": "gatsby build",
-        "start": "gatsby develop",
-        "serve": "gatsby serve",
-        "clean": "gatsby clean"
+        "docusaurus": "docusaurus",
+        "start": "docusaurus start",
+        "build": "docusaurus build",
+        "swizzle": "docusaurus swizzle",
+        "deploy": "docusaurus deploy",
+        "clear": "docusaurus clear",
+        "serve": "docusaurus serve",
+        "write-translations": "docusaurus write-translations",
+        "write-heading-ids": "docusaurus write-heading-ids",
+        "typecheck": "tsc"
+    },
+    "dependencies": {
+        "@docusaurus/core": "3.2.1",
+        "@docusaurus/preset-classic": "3.2.1",
+        "@mdx-js/react": "^3.0.0",
+        "clsx": "^2.0.0",
+        "prism-react-renderer": "^2.3.0",
+        "react": "^18.0.0",
+        "react-dom": "^18.0.0"
+    },
+    "devDependencies": {
+        "@docusaurus/module-type-aliases": "3.2.1",
+        "@docusaurus/tsconfig": "3.2.1",
+        "@docusaurus/types": "3.2.1",
+        "docusaurus-plugin-typedoc": "^0.22.0",
+        "typedoc": "^0.25.13",
+        "typedoc-plugin-markdown": "^3.17.1",
+        "typescript": "~5.2.2"
+    },
+    "browserslist": {
+        "production": [
+            ">0.5%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 3 chrome version",
+            "last 3 firefox version",
+            "last 5 safari version"
+        ]
+    },
+    "engines": {
+        "node": ">=18.0"
     }
 }
