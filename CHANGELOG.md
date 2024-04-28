@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.4.5](https://github.com/alperensert/node-capmonster/compare/node-capmonster-v0.4.4...node-capmonster-v0.4.5) (2024-04-28)
+
+
+### Features
+
+* added data dome task class for handling Data Dome captchas ([5e340f3](https://github.com/alperensert/node-capmonster/commit/5e340f33e68649608b6015290b33b32c1078fad5))
+* added geetest v4 task support ([0332067](https://github.com/alperensert/node-capmonster/commit/0332067c64671b91e8b2a76b9c3946470017c981))
+
+
+### Bug Fixes
+
+* export aws waf task from root of the package ([da4822f](https://github.com/alperensert/node-capmonster/commit/da4822f0e1150decacec03c2ec3519694b7a82f8))
+
 ## [0.4.4](https://github.com/alperensert/node-capmonster/compare/node-capmonster-v0.4.3...node-capmonster-v0.4.4) (2024-04-27)
 
 
