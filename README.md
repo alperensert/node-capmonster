@@ -40,6 +40,7 @@ pnpm add node-capmonster
 -   ReCAPTCHA v2 / v2 Enterprise / v3
 -   Turnstile
 -   TenDI
+-   Data Dome
 -   AWS WAF
 
 ## Usage examples
@@ -72,4 +73,4 @@ const taskId = await client.createWithTask(task)
 const result = await client.joinTaskResult(taskId)
 ```
 
-More examples can be found at [documentation](https://node-capmonster.alperen.io).
+More examples can be found at [documentation](https://node-capmonster.quasm.dev).
