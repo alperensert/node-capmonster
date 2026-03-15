@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// eslint-disable-next-line @typescript-eslint/triple-slash-reference
-/// <reference path="types.d.ts" />
+import { describe, test, expect, beforeEach, jest, spyOn } from "bun:test"
 import { RecaptchaV2Task } from "../src"
 import {
     CapmonsterClient,
@@ -14,7 +13,7 @@ import { utils } from "./utils/config.json"
 describe("CapmonsterClient", () => {
     let captcha: CapmonsterClient
     beforeEach(() => {
-        captcha = new CapmonsterClient(process.env.API_KEY)
+        captcha = new CapmonsterClient(process.env.API_KEY!)
     })
     test("with valid api key", async () => {
         const balance = await captcha.getBalance()
@@ -22,13 +21,13 @@ describe("CapmonsterClient", () => {
     })
     test("with invalid api key", async () => {
         captcha.clientKey = utils.fakeApiKey
-        const balance = captcha.getBalance()
-        await expect(balance).rejects.toThrowError(CapmonsterError)
+        await expect(captcha.getBalance()).rejects.toThrow(CapmonsterError)
     })
-    test("with invalid taskId", () => {
-        const _captcha = new RecaptchaV2Task(process.env.API_KEY)
-        const result = _captcha.getTaskResult(99)
-        expect(result).rejects.toThrowError(CapmonsterError)
+    test("with invalid taskId", async () => {
+        const _captcha = new RecaptchaV2Task(process.env.API_KEY!)
+        await expect(_captcha.getTaskResult(99)).rejects.toThrow(
+            CapmonsterError
+        )
     })
     test("check stringCookies is parsing as expected", () => {
         const cookies = captcha.convertCookies(utils.fakeCookies)
@@ -49,7 +48,7 @@ describe("CapmonsterClient", () => {
     test("check addCookies with wrong length array", () => {
         const cookie = ["thisisbad", ...utils.fakeCookiesArray]
         const addCookies = (captcha as any)["addCookies"]
-        expect(() => addCookies(cookie)).toThrowError(Error)
+        expect(() => addCookies(cookie)).toThrow(Error)
     })
     test("check setCallbackUrl & unsetCallbackUrl", () => {
         captcha.setCallbackUrl(utils.callbackUrl)
@@ -62,9 +61,9 @@ describe("CapmonsterClient", () => {
 })
 
 describe("UAProxy", () => {
-    const warn = jest.spyOn(global.console, "warn")
+    const warn = spyOn(console, "warn")
     let captcha: UAProxy
-    beforeEach(() => (captcha = new UAProxy(process.env.API_KEY)))
+    beforeEach(() => (captcha = new UAProxy(process.env.API_KEY!)))
     test("check function setProxy & disableProxy", () => {
         warn.mockReset()
         captcha.setProxy("https", "127.0.0.1", 61)

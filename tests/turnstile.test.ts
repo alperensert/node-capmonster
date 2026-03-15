@@ -1,42 +1,41 @@
-// eslint-disable-next-line @typescript-eslint/triple-slash-reference
-/// <reference path="types.d.ts" />
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { describe, test, expect, spyOn } from "bun:test"
 import { CapmonsterError, TurnstileTask } from "../src"
 import { tasks } from "./utils/config.json"
 
+const values = tasks.turnstile
+
 describe("TurnstileTask", () => {
-    const warn = jest.spyOn(global.console, "warn")
-    let captcha: TurnstileTask
-    let taskId: number
-    const values = tasks.turnstile
-    beforeEach(() => {
-        captcha = new TurnstileTask(process.env.API_KEY)
+    test("createTask (deprecated) warns and returns taskId", async () => {
+        const warn = spyOn(console, "warn").mockReset()
+        const captcha = new TurnstileTask(process.env.API_KEY!)
+        const taskId = await captcha.createTask(
+            values.websiteUrl,
+            values.websiteKey
+        )
+        expect(warn).toHaveBeenCalledTimes(1)
+        expect(taskId).toBeGreaterThan(0)
     })
-    test("check createTask", async () => {
-        warn.mockReset()
-        const _taskId = captcha.createTask(values.websiteUrl, values.websiteKey)
-        expect(warn).toBeCalledTimes(1)
-        expect(_taskId).resolves.not.toBeUndefined()
-        taskId = await _taskId
+
+    test("task() builds correct config", () => {
+        const captcha = new TurnstileTask(process.env.API_KEY!)
+        const task = captcha.task({
+            websiteKey: values.websiteKey,
+            websiteURL: values.websiteUrl,
+        })
+        expect(task.cloudflareTaskType).toBeUndefined()
+        expect(task.pageAction).toBeUndefined()
     })
-    test("check task & createWithTask", async () => {
+
+    test("createWithTask + joinTaskResult solves captcha", async () => {
+        const captcha = new TurnstileTask(process.env.API_KEY!)
         const task = captcha.task({
             websiteKey: values.websiteKey,
             websiteURL: values.websiteUrl,
         })
         try {
-            const _taskId = captcha.createWithTask(task)
-            expect(taskId).resolves.not.toBeUndefined()
-            taskId = await _taskId
-        } catch (err) {
-            expect(err).not.toBeInstanceOf(CapmonsterError)
-        }
-    })
-    test("check getTaskResult", () => {
-        const result = captcha.getTaskResult(taskId)
-        expect(result).resolves.not.toThrowError()
-    })
-    test("check joinTaskResult", async () => {
-        try {
+            const taskId = await captcha.createWithTask(task)
+            expect(taskId).toBeGreaterThan(0)
             const result = await captcha.joinTaskResult(taskId)
             expect(result).toHaveProperty("token")
         } catch (err) {
