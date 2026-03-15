@@ -8,6 +8,10 @@ export class CapmonsterClient {
     private static balanceUrl = "/getBalance"
     private static createTaskUrl = "/createTask"
     private static taskResultUrl = "/getTaskResult"
+    private static reportIncorrectImageUrl = "/reportIncorrectImageCaptcha"
+    private static reportIncorrectTokenUrl = "/reportIncorrectTokenCaptcha"
+    private static userAgentUrl =
+        "https://capmonster.cloud/api/useragent/actual"
     private callbackUrl?: string
     private request: AxiosInstance
     private timeout = 120
@@ -85,6 +89,55 @@ export class CapmonsterClient {
      */
     public setTimeout = (timeout: number) => {
         if (timeout > 0 && timeout <= 300) this.timeout = timeout
+    }
+
+    /**
+     * Report an incorrect image captcha solution.
+     * @param taskId Task ID to report
+     */
+    public reportIncorrectImageCaptcha = async (
+        taskId: number
+    ): Promise<void> => {
+        const requestData: Omit<IRequest, "callbackUrl"> = {
+            clientKey: this.clientKey,
+            taskId,
+        }
+        const { data } = await this.request.post<IErrorResponse>(
+            CapmonsterClient.reportIncorrectImageUrl,
+            requestData
+        )
+        this.checkResponse(data)
+    }
+
+    /**
+     * Report an incorrect token captcha solution
+     * (reCAPTCHA v2/v3/Enterprise, GeeTest, Turnstile).
+     * @param taskId Task ID to report
+     */
+    public reportIncorrectTokenCaptcha = async (
+        taskId: number
+    ): Promise<void> => {
+        const requestData: Omit<IRequest, "callbackUrl"> = {
+            clientKey: this.clientKey,
+            taskId,
+        }
+        const { data } = await this.request.post<IErrorResponse>(
+            CapmonsterClient.reportIncorrectTokenUrl,
+            requestData
+        )
+        this.checkResponse(data)
+    }
+
+    /**
+     * Returns the current valid Windows User-Agent string
+     * from CapMonster Cloud. Use this UA when captcha tasks
+     * require a userAgent parameter.
+     */
+    public getUserAgent = async (): Promise<string> => {
+        const { data } = await axios.get<string>(
+            CapmonsterClient.userAgentUrl
+        )
+        return data
     }
 
     protected _createTask = async <T extends ITask>(task: T) => {
