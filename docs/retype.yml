@@ -1,0 +1,31 @@
+input: .
+output: .retype
+
+url: alperensert.github.io/node-capmonster
+
+branding:
+  title: node-capmonster
+  label: Docs
+
+links:
+  - text: Getting Started
+    link: /getting-started/
+    icon: rocket
+  - text: GitHub
+    link: https://github.com/alperensert/node-capmonster
+    icon: mark-github
+    target: blank
+
+footer:
+  copyright: "&copy; Copyright {{ year }}. All rights reserved."
+
+search:
+  hotkeys:
+    - k
+
+snippets:
+  lineNumbers:
+    - ts
+    - js
+    - json
+    - bash
