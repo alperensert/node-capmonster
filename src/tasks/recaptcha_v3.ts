@@ -114,6 +114,10 @@ interface IRecaptchaV3TaskRequest extends ITask {
      */
     pageAction?: string
     /**
+     * Set to true to solve as reCAPTCHA v3 Enterprise.
+     */
+    isEnterprise?: boolean
+    /**
      * @default false
      * @description You receive a token from CapMonster Cloud,
      * send it to the site, but the site rejects it. Moreover,

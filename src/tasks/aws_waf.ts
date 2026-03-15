@@ -20,10 +20,11 @@ export class AmazonTask extends UAProxy {
         task: Omit<IAmazonTaskRequest, "type">
     ): Promise<number> => {
         const data: IAmazonTaskRequest = {
-            type: "AmazonTaskProxyless",
+            type: "AmazonTask",
             ...task,
         }
-        const [userAgentData] = this.isUserAgentTask(data)
+        const [proxyData] = this.isProxyTask(data)
+        const [userAgentData] = this.isUserAgentTask(proxyData)
         return await this._createTask(userAgentData)
     }
 
@@ -57,7 +58,7 @@ export class AmazonTask extends UAProxy {
 }
 
 interface IAmazonTaskRequest extends ITask {
-    type: "AmazonTaskProxyless"
+    type: "AmazonTaskProxyless" | "AmazonTask"
     /**
      * The address of the main page where captcha is solved
      */
@@ -68,23 +69,25 @@ interface IAmazonTaskRequest extends ITask {
      */
     websiteKey: string
     /**
-     * Link to challenge.js
-     */
-    challengeScript: string
-    /**
      * Link to captcha.js
      */
     captchaScript: string
     /**
+     * Link to challenge.js (required for challenge mode)
+     */
+    challengeScript?: string
+    /**
      * A string that can be retrieved from an html page with a captcha
      * or with javascript by executing the `window.gokuProps.context`
+     * (required for challenge mode)
      */
-    context: string
+    context?: string
     /**
      * A string that can be retrieved from an html page with a captcha
      * or with javascript by executing the `window.gokuProps.iv`
+     * (required for challenge mode)
      */
-    iv: string
+    iv?: string
     /**
      * By default false. If you need to use cookies "aws-waf-token", specify the value true.
      * Otherwise, what you will get in return is "captcha_voucher" and "existing_token".
@@ -93,6 +96,8 @@ interface IAmazonTaskRequest extends ITask {
 }
 
 interface IAmazonTaskResponse extends ITaskSolution {
-    cookies: Record<string, string>
-    userAgent: string
+    cookies?: Record<string, string>
+    userAgent?: string
+    captcha_voucher?: string
+    existing_token?: string
 }

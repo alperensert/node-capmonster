@@ -33,6 +33,7 @@ export class DataDomeTask extends UAProxy {
             type: "CustomTask",
             class: "DataDome",
             ...task,
+            ...this.proxy,
         }
         const [userAgentData] = this.isUserAgentTask(data)
         return await this._createTask(userAgentData)

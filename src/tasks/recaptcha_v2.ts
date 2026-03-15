@@ -25,7 +25,7 @@ export class RecaptchaV2Task extends UAProxy {
             "This function is deprecated, use `task` & `createWithTask` to avoid errors in future versions"
         )
         const data: IRecaptchaV2TaskRequest = {
-            type: "NoCaptchaTask",
+            type: "RecaptchaV2Task",
             websiteURL: websiteUrl,
             websiteKey,
             cookies: cookies ? this.addCookies(cookies) : undefined,
@@ -55,7 +55,7 @@ export class RecaptchaV2Task extends UAProxy {
         task: Omit<IRecaptchaV2TaskRequest, "type">
     ): Promise<number> => {
         const data: IRecaptchaV2TaskRequest = {
-            type: "NoCaptchaTask",
+            type: "RecaptchaV2Task",
             ...task,
         }
         const [proxyData] = this.isProxyTask(data)
@@ -85,7 +85,7 @@ export class RecaptchaV2Task extends UAProxy {
 }
 
 interface IRecaptchaV2TaskRequest extends ITask {
-    type: "NoCaptchaTaskProxyless" | "NoCaptchaTask"
+    type: "RecaptchaV2TaskProxyless" | "RecaptchaV2Task"
     /**
      * Address of a webpage with Google ReCaptcha
      */
@@ -100,6 +100,10 @@ interface IRecaptchaV2TaskRequest extends ITask {
      * must be grabbed every time you want to solve a ReCaptcha2.
      */
     recaptchaDataSValue?: string
+    /**
+     * Set to true for invisible reCAPTCHA (hidden field, no checkbox).
+     */
+    isInvisible?: boolean
     /**
      * Additional cookies which we must
      * use during interaction with target page or Google.

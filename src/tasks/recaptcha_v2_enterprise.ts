@@ -98,6 +98,11 @@ interface IRecaptchaV2ETaskRequest extends ITask {
      */
     websiteKey: string
     /**
+     * Action parameter if different from default “verify”.
+     * Example: grecaptcha.execute('site_key', {action:'login_test'})
+     */
+    pageAction?: string
+    /**
      * Some implementations of the reCAPTCHA Enterprise
      * widget may contain additional parameters that are passed to
      * the “grecaptcha.enterprise.render” method along with the sitekey.

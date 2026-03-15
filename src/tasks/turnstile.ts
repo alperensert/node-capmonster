@@ -85,6 +85,37 @@ interface ITurnstileTaskRequest extends ITask {
      * Turnstile key
      */
     websiteKey: string
+    /**
+     * Action field from the Turnstile callback function.
+     */
+    pageAction?: string
+    /**
+     * Value from the cData parameter of the Turnstile widget.
+     */
+    data?: string
+    /**
+     * Set to "token" or "cf_clearance" for Cloudflare Challenge pages.
+     * - "token": returns a token
+     * - "cf_clearance": returns a cf_clearance cookie (proxy required)
+     */
+    cloudflareTaskType?: "token" | "cf_clearance"
+    /**
+     * Value from chlPageData parameter (required for Cloudflare Challenge token mode).
+     */
+    pageData?: string
+    /**
+     * Base64-encoded HTML of the Cloudflare "Just a moment" page
+     * (required for cf_clearance mode).
+     */
+    htmlPageBase64?: string
+    /**
+     * Browser User-Agent (required for Cloudflare Challenge).
+     */
+    userAgent?: string
+    /**
+     * Captcha script URL (optional for Cloudflare Challenge).
+     */
+    apiJsUrl?: string
 }
 
 interface ITurnstileTaskResponse extends ITaskSolution {
@@ -92,4 +123,12 @@ interface ITurnstileTaskResponse extends ITaskSolution {
      * The Turnstile token to be substituted into the form.
      */
     token: string
+    /**
+     * User-Agent used during solving.
+     */
+    userAgent?: string
+    /**
+     * cf_clearance cookie value (only for cloudflareTaskType: "cf_clearance").
+     */
+    cf_clearance?: string
 }
