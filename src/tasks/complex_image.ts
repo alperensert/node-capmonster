@@ -80,7 +80,7 @@ interface IComplexImageTaskRequest extends ITask {
      * Specifies the task object class.
      * Currently on supports "recaptcha"
      */
-    class: "recaptcha" | "hcaptcha"
+    class: "recaptcha" | "funcaptcha"
     /**
      * List with image URLs.
      */

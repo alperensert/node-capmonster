@@ -8,10 +8,6 @@
             "websiteUrl": "https://lessons.zennolab.com/captchas/recaptcha/v3.php?level=beta",
             "websiteKey": "6Le0xVgUAAAAAIt20XEB4rVhYOODgTl00d8juDob"
         },
-        "hcaptcha": {
-            "websiteUrl": "https://lessons.zennolab.com/captchas/hcaptcha/?level=easy",
-            "websiteKey": "472fc7af-86a4-4382-9a49-ca9090474471"
-        },
         "funcaptcha": {
             "websiteUrl": "https://funcaptcha.com/fc/api/nojs/?pkey=69A21A01-CC7B-B9C6-0F9A-E7FA06677FFC",
             "websitePublicKey": "69A21A01-CC7B-B9C6-0F9A-E7FA06677FFC",
@@ -29,7 +25,7 @@
             "externalImageLink": "https://qph.fs.quoracdn.net/main-qimg-0025b2b485965ef8cb19e933bcc367e1",
             "externalImageExpected": "w68hp"
         },
-        "compleximageHCaptcha": {
+        "compleximageRecaptcha": {
             "imageUrls": [
                 "https://i.postimg.cc/kg71cbRt/image-1.jpg",
                 "https://i.postimg.cc/6381Zx2j/image.jpg"

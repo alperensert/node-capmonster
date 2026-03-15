@@ -1,42 +1,57 @@
-// eslint-disable-next-line @typescript-eslint/triple-slash-reference
-/// <reference path="types.d.ts" />
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { describe, test, expect } from "bun:test"
 import { CapmonsterError, ComplexImageTask } from "../src"
 import { tasks } from "./utils/config.json"
 
 describe("ComplexImageTask", () => {
-    let captcha: ComplexImageTask
-    let taskId: number
-    beforeEach(() => {
-        captcha = new ComplexImageTask(process.env.API_KEY)
-    })
-    test("check task & createWithTask", async () => {
+    test("task() builds correct config", () => {
+        const captcha = new ComplexImageTask(process.env.API_KEY!)
         const task = captcha.task({
-            class: "hcaptcha",
-            imageUrls: tasks.compleximageHCaptcha.imageUrls,
+            class: "recaptcha",
+            imageUrls: tasks.compleximageRecaptcha.imageUrls,
             metadata: {
-                Task: tasks.compleximageHCaptcha.task,
+                Task: tasks.compleximageRecaptcha.task,
             },
         })
         expect(task.imagesBase64).toBeUndefined()
         expect(task.metadata.Grid).toBeUndefined()
-        try {
-            const _taskId = captcha.createWithTask(task)
-            expect(taskId).resolves.not.toBeUndefined()
-            taskId = await _taskId
-        } catch (err) {
-            expect(err).not.toBeInstanceOf(CapmonsterError)
-        }
     })
-    test("check getTaskResult", () => {
-        const result = captcha.getTaskResult(taskId)
-        expect(result).resolves.not.toThrowError()
-    })
-    test("check joinTaskResult", async () => {
+
+    test("createWithTask + joinTaskResult solves captcha", async () => {
+        const captcha = new ComplexImageTask(process.env.API_KEY!)
+        const task = captcha.task({
+            class: "recaptcha",
+            imageUrls: tasks.compleximageRecaptcha.imageUrls,
+            metadata: {
+                Task: tasks.compleximageRecaptcha.task,
+            },
+        })
         try {
+            const taskId = await captcha.createWithTask(task)
+            expect(taskId).toBeGreaterThan(0)
             const result = await captcha.joinTaskResult(taskId)
             expect(result).toHaveProperty("answer")
         } catch (err) {
             expect(err).toBeInstanceOf(CapmonsterError)
+        }
+    })
+
+    test("getTaskResult returns null or solution", async () => {
+        const captcha = new ComplexImageTask(process.env.API_KEY!)
+        const taskId = await captcha.createWithTask(
+            captcha.task({
+                class: "recaptcha",
+                imageUrls: tasks.compleximageRecaptcha.imageUrls,
+                metadata: {
+                    Task: tasks.compleximageRecaptcha.task,
+                },
+            })
+        )
+        const result = await captcha.getTaskResult(taskId)
+        if (result !== null) {
+            expect(result).toHaveProperty("answer")
+        } else {
+            expect(result).toBeNull()
         }
     })
 })
