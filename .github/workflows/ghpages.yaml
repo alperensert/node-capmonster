@@ -5,7 +5,6 @@ on:
     branches: ["master"]
     paths:
       - docs/**
-      - src/**
   workflow_dispatch:
 
 permissions:
@@ -17,29 +16,17 @@ concurrency:
   group: "pages"
   cancel-in-progress: true
 
-defaults:
-  run:
-    shell: bash
-    working-directory: docs
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: retypeapp/action-build@latest
         with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-      - run: npm install -g pnpm
-      - run: pnpm install
-        working-directory: .
-      - run: pnpm install
-      - run: pnpm build
+          directory: docs
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/build
+          path: docs/.retype
 
   deploy:
     needs: build
