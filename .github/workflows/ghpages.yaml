@@ -17,26 +17,17 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: retypeapp/action-build@latest
         with:
           directory: docs
-      - uses: actions/upload-pages-artifact@v3
+      - uses: retypeapp/action-github-pages@latest
+        id: deployment
         with:
-          path: docs/.retype
-
-  deploy:
-    needs: build
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          update-branch: true
