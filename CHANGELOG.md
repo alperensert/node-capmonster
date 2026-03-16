@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/alperensert/node-capmonster/compare/node-capmonster-v1.0.0...node-capmonster-v1.0.1) (2026-03-16)
+
+
+### Bug Fixes
+
+* **ci:** fix docs deployment permissions and branch ([9391923](https://github.com/alperensert/node-capmonster/commit/93919231d8f17132b399e1d406d6b2311a8cd06a))
+
 ## [1.0.0](https://github.com/alperensert/node-capmonster/compare/node-capmonster-v0.4.5...node-capmonster-v1.0.0) (2026-03-16)
 
 
