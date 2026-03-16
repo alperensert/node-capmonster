@@ -8,7 +8,7 @@ order: 93
 
 Solve Amazon AWS WAF captcha challenges. Supports both standard and challenge modes.
 
-## Standard mode (cookie solution)
+## Basic usage
 
 ```ts
 import { AmazonTask } from "node-capmonster"
@@ -27,93 +27,6 @@ const result = await client.joinTaskResult(taskId)
 
 console.log(result.cookies)    // { "aws-waf-token": "..." }
 console.log(result.userAgent)  // UA used during solving
-```
-
-## Standard mode (voucher solution)
-
-```ts
-const task = client.task({
-    websiteURL: "https://example.com",
-    websiteKey: "<window.gokuProps.key>",
-    captchaScript: "https://example.com/captcha.js",
-    // cookieSolution defaults to false
-})
-
-const taskId = await client.createWithTask(task)
-const result = await client.joinTaskResult(taskId)
-
-console.log(result.captcha_voucher)
-console.log(result.existing_token)
-```
-
-## Challenge mode
-
-When the challenge script, context, and IV are required:
-
-```ts
-const task = client.task({
-    websiteURL: "https://example.com",
-    websiteKey: "<window.gokuProps.key>",
-    captchaScript: "https://example.com/captcha.js",
-    challengeScript: "https://example.com/challenge.js",
-    context: "<window.gokuProps.context>",
-    iv: "<window.gokuProps.iv>",
-    cookieSolution: true,
-})
-
-const taskId = await client.createWithTask(task)
-const result = await client.joinTaskResult(taskId)
-
-console.log(result.cookies)
-```
-
-## With proxy
-
-```ts
-const client = new AmazonTask("<api_key>")
-
-client.setGlobalProxy({
-    proxyType: "http",
-    proxyAddress: "8.8.8.8",
-    proxyPort: 8080,
-})
-
-const task = client.task({
-    websiteURL: "https://example.com",
-    websiteKey: "<aws_waf_key>",
-    captchaScript: "https://example.com/captcha.js",
-    cookieSolution: true,
-})
-
-const taskId = await client.createWithTask(task)
-const result = await client.joinTaskResult(taskId)
-```
-
-## With error handling
-
-```ts
-import { AmazonTask, CapmonsterError } from "node-capmonster"
-
-const client = new AmazonTask("<api_key>")
-
-try {
-    const task = client.task({
-        websiteURL: "https://example.com",
-        websiteKey: "<aws_waf_key>",
-        captchaScript: "https://example.com/captcha.js",
-        cookieSolution: true,
-    })
-    const taskId = await client.createWithTask(task)
-    const result = await client.joinTaskResult(taskId)
-
-    // Use the cookie in subsequent requests
-    const wafToken = result.cookies?.["aws-waf-token"]
-    console.log("WAF Token:", wafToken)
-} catch (err) {
-    if (err instanceof CapmonsterError) {
-        console.error(`Error: ${err.errorCode} - ${err.errorDescription}`)
-    }
-}
 ```
 
 ## Request parameters
