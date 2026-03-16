@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://alperensert.github.io/node-capmonster/sitemap.xml.gz
