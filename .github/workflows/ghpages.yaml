@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -30,4 +30,5 @@ jobs:
       - uses: retypeapp/action-github-pages@latest
         id: deployment
         with:
+          branch: gh-pages
           update-branch: true
