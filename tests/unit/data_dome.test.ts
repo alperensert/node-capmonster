@@ -65,4 +65,25 @@ describe("DataDomeTask - Unit", () => {
         const sentData = mockPost.mock.calls[0][1]
         expect(sentData.task.type).toBe("CustomTask")
     })
+
+    test("joinTaskResult returns solution when ready", async () => {
+        mockPost.mockResolvedValueOnce({
+            data: {
+                errorId: 0,
+                status: "ready",
+                solution: {
+                    domains: {
+                        "site.com": {
+                            cookies: {
+                                datadome: "abc123",
+                            },
+                        },
+                    },
+                },
+            },
+        })
+        const result = await client.joinTaskResult(500)
+        expect(result).not.toBeNull()
+        expect(result.domains).toBeDefined()
+    })
 })

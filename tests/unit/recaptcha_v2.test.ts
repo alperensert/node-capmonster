@@ -78,4 +78,17 @@ describe("RecaptchaV2Task - Unit", () => {
         const sentData = mockPost.mock.calls[0][1]
         expect(sentData.task.isInvisible).toBe(true)
     })
+
+    test("getTaskResult returns solution", async () => {
+        mockPost.mockResolvedValueOnce({
+            data: {
+                errorId: 0,
+                status: "ready",
+                solution: { gRecaptchaResponse: "token-123" },
+            },
+        })
+        const result = await client.getTaskResult(123)
+        expect(result).not.toBeNull()
+        expect(result!.gRecaptchaResponse).toBe("token-123")
+    })
 })

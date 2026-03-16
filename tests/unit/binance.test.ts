@@ -56,4 +56,16 @@ describe("BinanceTask - Unit", () => {
         expect(sentData.task.type).toBe("BinanceTask")
         expect(sentData.task.proxyType).toBe("socks5")
     })
+
+    test("getTaskResult returns solution", async () => {
+        mockPost.mockResolvedValueOnce({
+            data: {
+                errorId: 0,
+                status: "ready",
+                solution: {},
+            },
+        })
+        const result = await client.getTaskResult(200)
+        expect(result).not.toBeNull()
+    })
 })

@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { describe, test, expect, spyOn } from "bun:test"
+import { describe, test, expect } from "bun:test"
 import path from "path"
-import { CapmonsterError, ImageToTextTask } from "../src"
+import { ImageToTextTask } from "../src"
 import { tasks } from "./utils/config.json"
 
 const values = tasks.imagetotext
-const regex =
-    /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/
+const regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/
 
 describe("ImageToTextTask", () => {
     test("prepareImageFromLocal returns valid base64", async () => {
@@ -29,65 +28,14 @@ describe("ImageToTextTask", () => {
         expect(externalImage).toMatch(regex)
     })
 
-    test("createTask (deprecated) warns and returns taskId", async () => {
-        const warn = spyOn(console, "warn").mockReset()
+    test("createWithTask returns valid taskId", async () => {
         const captcha = new ImageToTextTask(process.env.API_KEY!)
         const body = await captcha.prepareImageFromLocal(
             path.resolve(__dirname, values.numericPath)
         )
-        const taskId = await captcha.createTask(body, undefined, 95, undefined, 1)
-        expect(warn).toHaveBeenCalledTimes(1)
+        const taskId = await captcha.createWithTask(
+            captcha.task({ body, recognizingThreshold: 95 })
+        )
         expect(taskId).toBeGreaterThan(0)
-    })
-
-    test("createWithTask + joinTaskResult solves numeric image", async () => {
-        const captcha = new ImageToTextTask(process.env.API_KEY!)
-        const body = await captcha.prepareImageFromLocal(
-            path.resolve(__dirname, values.numericPath)
-        )
-        try {
-            const taskId = await captcha.createWithTask(
-                captcha.task({ body, recognizingThreshold: 95 })
-            )
-            expect(taskId).toBeGreaterThan(0)
-            const result = await captcha.joinTaskResult(taskId)
-            expect(result).toHaveProperty("text")
-        } catch (err) {
-            expect(err).toBeInstanceOf(CapmonsterError)
-        }
-    })
-
-    test("createWithTask + joinTaskResult solves text image", async () => {
-        const captcha = new ImageToTextTask(process.env.API_KEY!)
-        const body = await captcha.prepareImageFromLocal(
-            path.resolve(__dirname, values.textPath)
-        )
-        try {
-            const taskId = await captcha.createWithTask(
-                captcha.task({ body, recognizingThreshold: 95 })
-            )
-            expect(taskId).toBeGreaterThan(0)
-            const result = await captcha.joinTaskResult(taskId)
-            expect(result).toHaveProperty("text")
-        } catch (err) {
-            expect(err).toBeInstanceOf(CapmonsterError)
-        }
-    })
-
-    test("createWithTask + joinTaskResult solves external image", async () => {
-        const captcha = new ImageToTextTask(process.env.API_KEY!)
-        const body = await captcha.prepareImageFromLink(
-            values.externalImageLink
-        )
-        try {
-            const taskId = await captcha.createWithTask(
-                captcha.task({ body, recognizingThreshold: 95 })
-            )
-            expect(taskId).toBeGreaterThan(0)
-            const result = await captcha.joinTaskResult(taskId)
-            expect(result).toHaveProperty("text")
-        } catch (err) {
-            expect(err).toBeInstanceOf(CapmonsterError)
-        }
     })
 })

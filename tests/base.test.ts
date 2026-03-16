@@ -60,6 +60,37 @@ describe("CapmonsterClient", () => {
     })
 })
 
+describe("CapmonsterClient - getUserAgent", () => {
+    test("getUserAgent returns a non-empty string", async () => {
+        const captcha = new CapmonsterClient(process.env.API_KEY!)
+        const ua = await captcha.getUserAgent()
+        expect(typeof ua).toBe("string")
+        expect(ua.length).toBeGreaterThan(0)
+        expect(ua).toContain("Mozilla")
+    })
+})
+
+describe("CapmonsterClient - reportIncorrect", () => {
+    let captcha: RecaptchaV2Task
+
+    beforeEach(() => {
+        captcha = new RecaptchaV2Task(process.env.API_KEY!)
+    })
+
+    test("reportIncorrectTokenCaptcha with invalid taskId throws CapmonsterError", async () => {
+        await expect(captcha.reportIncorrectTokenCaptcha(99)).rejects.toThrow(
+            CapmonsterError
+        )
+    })
+
+    test("reportIncorrectImageCaptcha with invalid taskId resolves without error", async () => {
+        // The API accepts any taskId for image reports without throwing
+        await expect(
+            captcha.reportIncorrectImageCaptcha(99)
+        ).resolves.toBeUndefined()
+    })
+})
+
 describe("UAProxy", () => {
     const warn = spyOn(console, "warn")
     let captcha: UAProxy

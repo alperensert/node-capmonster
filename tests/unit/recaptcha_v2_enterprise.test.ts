@@ -46,4 +46,17 @@ describe("RecaptchaV2EnterpriseTask - Unit", () => {
         expect(sentData.task.pageAction).toBe("login_test")
         expect(sentData.task.type).toBe("RecaptchaV2EnterpriseTaskProxyless")
     })
+
+    test("getTaskResult returns solution", async () => {
+        mockPost.mockResolvedValueOnce({
+            data: {
+                errorId: 0,
+                status: "ready",
+                solution: { gRecaptchaResponse: "enterprise-token-456" },
+            },
+        })
+        const result = await client.getTaskResult(600)
+        expect(result).not.toBeNull()
+        expect(result!.gRecaptchaResponse).toBe("enterprise-token-456")
+    })
 })

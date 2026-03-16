@@ -16,7 +16,8 @@ describe("ImpervaTask - Unit", () => {
         const task = client.task({
             websiteURL: "https://protected-site.com",
             metadata: {
-                incapsulaScriptUrl: "https://protected-site.com/_Incapsula_Resource",
+                incapsulaScriptUrl:
+                    "https://protected-site.com/_Incapsula_Resource",
                 incapsulaCookies: "visid_incap=abc; incap_ses=xyz",
                 reese84UrlEndpoint: "https://protected-site.com/a3fE",
             },
@@ -42,7 +43,8 @@ describe("ImpervaTask - Unit", () => {
         await client.createWithTask({
             websiteURL: "https://protected-site.com",
             metadata: {
-                incapsulaScriptUrl: "https://protected-site.com/_Incapsula_Resource",
+                incapsulaScriptUrl:
+                    "https://protected-site.com/_Incapsula_Resource",
                 incapsulaCookies: "visid_incap=abc",
                 reese84UrlEndpoint: "https://protected-site.com/a3fE",
             },

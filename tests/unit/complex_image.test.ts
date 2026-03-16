@@ -50,14 +50,49 @@ describe("ComplexImageTask - Unit", () => {
                 errorId: 0,
                 status: "ready",
                 solution: {
-                    answer: [true, false, true, false, false, true, false, false, true],
+                    answer: [
+                        true,
+                        false,
+                        true,
+                        false,
+                        false,
+                        true,
+                        false,
+                        false,
+                        true,
+                    ],
                 },
             },
         })
         const result = await client.getTaskResult(800)
         expect(result).not.toBeNull()
         expect(result!.answer).toEqual([
-            true, false, true, false, false, true, false, false, true,
+            true,
+            false,
+            true,
+            false,
+            false,
+            true,
+            false,
+            false,
+            true,
         ])
+    })
+
+    test("joinTaskResult returns solution when ready", async () => {
+        mockPost.mockResolvedValueOnce({
+            data: {
+                errorId: 0,
+                status: "ready",
+                solution: {
+                    type: "ComplexImageTask",
+                    class: "recaptcha",
+                    imageUrls: ["https://example.com/img1.jpg"],
+                    metadata: { Task: "Select all buses" },
+                },
+            },
+        })
+        const result = await client.joinTaskResult(800)
+        expect(result).not.toBeNull()
     })
 })
