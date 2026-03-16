@@ -10,34 +10,6 @@ export class ImageToTextTask extends CapmonsterClient {
     }
 
     /**
-     * Create task
-     * @returns ID of the created task
-     * @deprecated since v0.4 - use {@link task} & {@link createWithTask} instead
-     */
-    public createTask = async (
-        image: string,
-        module?: string,
-        recognizingThreshold?: number,
-        _case?: boolean,
-        numeric?: number,
-        math?: boolean
-    ): Promise<number> => {
-        console.warn(
-            "This function is deprecated, use `task` & `createWithTask` to avoid errors in future versions"
-        )
-        const data: IImageToTextTaskRequest = {
-            type: "ImageToTextTask",
-            body: image,
-            CapMonsterModule: module,
-            recognizingThreshold,
-            Case: _case,
-            numeric,
-            math,
-        }
-        return await this._createTask(data)
-    }
-
-    /**
      * Creates only the task configuration for reuseable tasks.
      * @param task {@link IImageToTextTaskRequest}
      * @returns Only the task you created {@link IImageToTextTaskRequest}
