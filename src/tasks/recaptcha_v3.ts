@@ -10,39 +10,6 @@ export class RecaptchaV3Task extends CapmonsterClient {
     }
 
     /**
-     * Create task
-     * @param websiteUrl Address of a webpage with Google ReCaptcha
-     * @param websiteKey Recaptcha website key.
-     * @param minimumScore Value between 0.1 to 0.9
-     * @param pageAction Widget action value. Website owner defines
-     * what user is doing on the page through
-     * this parameter. Default value: verify
-     * @param noCache
-     * @returns ID of the created task
-     * @deprecated since v0.4 - use {@link task} & {@link createWithTask} instead
-     */
-    public createTask = async (
-        websiteUrl: string,
-        websiteKey: string,
-        minimumScore?: number,
-        pageAction?: string,
-        noCache?: boolean
-    ): Promise<number> => {
-        console.warn(
-            "This function is deprecated, use `task` & `createWithTask` to avoid errors in future versions"
-        )
-        const data: IRecaptchaV3TaskRequest = {
-            type: "RecaptchaV3TaskProxyless",
-            websiteURL: websiteUrl,
-            websiteKey,
-            minScore: this.checkScore(minimumScore),
-            pageAction,
-            noCache,
-        }
-        return await this._createTask(data)
-    }
-
-    /**
      * Creates `only` the task configuration for reuseable tasks.
      * @param task {@link IRecaptchaV3TaskRequest}
      * @returns Only the task you created {@link IRecaptchaV3TaskRequest}
@@ -84,12 +51,6 @@ export class RecaptchaV3Task extends CapmonsterClient {
      */
     public joinTaskResult = async (taskId: number, timeout?: number) =>
         this._joinTaskResult<IRecaptchaV3TaskResponse>(taskId, timeout)
-
-    private checkScore = (score?: number): number | undefined => {
-        if (score === undefined) return score
-        if (score >= 0.9 || score <= 0.1) return 0.3
-        return score
-    }
 }
 
 interface IRecaptchaV3TaskRequest extends ITask {

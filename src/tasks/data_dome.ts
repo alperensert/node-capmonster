@@ -1,4 +1,4 @@
-import { ITask, ITaskSolution, UAProxy } from "../capmonster"
+import { ITask, ITaskSolution, ProxyConfig, UAProxy } from "../capmonster"
 
 /**
  * DataDomeTask class for handling data dome captchas
@@ -18,7 +18,11 @@ export class DataDomeTask extends UAProxy {
      * @param task {@link IDataDomeTaskRequest}
      * @returns Only the task you created {@link IDataDomeTaskRequest}
      */
-    public task = (task: Omit<IDataDomeTaskRequest, "type" | "class">) => task
+    public task = (
+        task: Omit<IDataDomeTaskRequest, "type" | "class"> & {
+            proxy?: ProxyConfig
+        }
+    ) => task
 
     /**
      * Creates a data dome captcha task for solving
@@ -27,13 +31,16 @@ export class DataDomeTask extends UAProxy {
      * @since v0.4.4
      */
     public createWithTask = async (
-        task: Omit<IDataDomeTaskRequest, "type" | "class">
+        task: Omit<IDataDomeTaskRequest, "type" | "class"> & {
+            proxy?: ProxyConfig
+        }
     ): Promise<number> => {
+        const { proxy, ...rest } = task
         const data: IDataDomeTaskRequest = {
             type: "CustomTask",
             class: "DataDome",
-            ...task,
-            ...this.proxy,
+            ...rest,
+            ...this.resolveProxy(proxy),
         }
         const [userAgentData] = this.isUserAgentTask(data)
         return await this._createTask(userAgentData)
@@ -62,11 +69,10 @@ export class DataDomeTask extends UAProxy {
 
 interface IDataDomeTaskRequestMetaData {
     /**
-     * Object that contains additional data about the captcha: "htmlPageBase64": "..." -
-     * a base64 encoded html page that comes with a 403 code and a Set-Cookie: datadome="..."
+     * A base64 encoded html page that comes with a 403 code and a Set-Cookie: datadome="..."
      * header in response to a get request to the target site.
      */
-    htmlPageBase64: string
+    htmlPageBase64?: string
     /**
      * Link to the captcha.
      * @example "https://geo.captcha-delivery.com/captcha/?initialCid=..."
