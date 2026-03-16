@@ -134,9 +134,7 @@ export class CapmonsterClient {
      * require a userAgent parameter.
      */
     public getUserAgent = async (): Promise<string> => {
-        const { data } = await axios.get<string>(
-            CapmonsterClient.userAgentUrl
-        )
+        const { data } = await axios.get<string>(CapmonsterClient.userAgentUrl)
         return data
     }
 
@@ -293,13 +291,19 @@ export class UAProxy extends CapmonsterClient {
      * Sets the proxy for using in tasks which supports.
      * @param proxy Proxy
      * @since v0.4
+     * @deprecated since v0.5 - pass proxy directly to `task()` or `createWithTask()`. Will be removed in a future version.
      */
     public setGlobalProxy = (
         proxy: WithRequired<
             IProxyTaskRequest,
             "proxyType" | "proxyAddress" | "proxyPort"
         >
-    ) => (this.proxy = proxy)
+    ) => {
+        console.warn(
+            "setGlobalProxy is deprecated. Pass proxy config directly to task() or createWithTask(). It will be removed in a future version."
+        )
+        this.proxy = proxy
+    }
 
     /**
      * Disables (by deleting the proxy instance) proxy.
@@ -315,8 +319,12 @@ export class UAProxy extends CapmonsterClient {
     /**
      * Resets the proxy if any
      * @since v0.4
+     * @deprecated since v0.5 - pass proxy directly to `task()` or `createWithTask()`. Will be removed in a future version.
      */
     public unsetProxy = (): void => {
+        console.warn(
+            "unsetProxy is deprecated. Pass proxy config directly to task() or createWithTask(). It will be removed in a future version."
+        )
         this.proxy = {}
     }
 
@@ -334,22 +342,30 @@ export class UAProxy extends CapmonsterClient {
     }
 
     protected isProxyTask = <T extends ITask>(
-        data: T
+        data: T,
+        taskProxy?: ProxyConfig
     ): [(T & IProxyTaskRequest) | T, boolean] => {
-        if (
-            this.proxy.proxyType !== undefined &&
+        const proxy =
+            taskProxy ??
+            (this.proxy.proxyType !== undefined &&
             this.proxy.proxyAddress !== undefined &&
             this.proxy.proxyPort !== undefined
-        ) {
+                ? this.proxy
+                : undefined)
+        if (proxy) {
             const dataWithProxy: T & IProxyTaskRequest = {
                 ...data,
-                ...this.proxy,
+                ...proxy,
             }
             return [dataWithProxy, true]
         }
         const d = data
         d.type += "Proxyless"
         return [d, false]
+    }
+
+    protected resolveProxy = (taskProxy?: ProxyConfig): IProxyTaskRequest => {
+        return taskProxy ?? this.proxy
     }
 }
 
@@ -408,6 +424,11 @@ export interface IResponse extends IErrorResponse {
     taskId?: number
     status?: "processing" | "ready"
 }
+
+export type ProxyConfig = Required<
+    Pick<IProxyTaskRequest, "proxyType" | "proxyAddress" | "proxyPort">
+> &
+    Pick<IProxyTaskRequest, "proxyLogin" | "proxyPassword">
 
 export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<
     T,

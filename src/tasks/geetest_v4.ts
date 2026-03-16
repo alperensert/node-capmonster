@@ -1,4 +1,4 @@
-import { ITask, ITaskSolution, UAProxy } from "../capmonster"
+import { ITask, ITaskSolution, ProxyConfig, UAProxy } from "../capmonster"
 
 export class GeeTestV4Task extends UAProxy {
     /**
@@ -16,8 +16,11 @@ export class GeeTestV4Task extends UAProxy {
      * @returns Only the task you created {@link IGeeTestTaskRequest}
      * @since v0.4.5
      */
-    public task = (task: Omit<IGeeTestV4TaskRequest, "type" | "version">) =>
-        task
+    public task = (
+        task: Omit<IGeeTestV4TaskRequest, "type" | "version"> & {
+            proxy?: ProxyConfig
+        }
+    ) => task
 
     /**
      * Creates a gee test task for solving
@@ -26,14 +29,17 @@ export class GeeTestV4Task extends UAProxy {
      * @since v0.4.5
      */
     public createWithTask = async (
-        task: Omit<IGeeTestV4TaskRequest, "type" | "version">
+        task: Omit<IGeeTestV4TaskRequest, "type" | "version"> & {
+            proxy?: ProxyConfig
+        }
     ): Promise<number> => {
+        const { proxy, ...rest } = task
         const data: IGeeTestV4TaskRequest = {
             type: "GeeTestTask",
             version: 4,
-            ...task,
+            ...rest,
         }
-        const [proxyData] = this.isProxyTask(data)
+        const [proxyData] = this.isProxyTask(data, proxy)
         const [userAgentData] = this.isUserAgentTask(proxyData)
         return await this._createTask(userAgentData)
     }

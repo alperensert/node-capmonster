@@ -1,4 +1,4 @@
-import { ITask, ITaskSolution, UAProxy } from "../capmonster"
+import { ITask, ITaskSolution, ProxyConfig, UAProxy } from "../capmonster"
 
 export class RecaptchaV2Task extends UAProxy {
     /**
@@ -10,40 +10,16 @@ export class RecaptchaV2Task extends UAProxy {
     }
 
     /**
-     * Create task
-     * @returns ID of the created task
-     * @deprecated since v0.4 - use {@link task} & {@link createWithTask} instead
-     */
-    public createTask = async (
-        websiteUrl: string,
-        websiteKey: string,
-        cookies?: string | Array<unknown> | object,
-        recaptchaSValue?: string,
-        noCache?: boolean
-    ): Promise<number> => {
-        console.warn(
-            "This function is deprecated, use `task` & `createWithTask` to avoid errors in future versions"
-        )
-        const data: IRecaptchaV2TaskRequest = {
-            type: "RecaptchaV2Task",
-            websiteURL: websiteUrl,
-            websiteKey,
-            cookies: cookies ? this.addCookies(cookies) : undefined,
-            recaptchaDataSValue: recaptchaSValue,
-            noCache,
-        }
-        const [proxyData] = this.isProxyTask(data)
-        const [userAgentData] = this.isUserAgentTask(proxyData)
-        return await this._createTask(userAgentData)
-    }
-
-    /**
      * Creates only the task configuration for reuseable tasks.
      * @param task {@link IRecaptchaV2TaskRequest}
      * @returns Only the task you created {@link IRecaptchaV2TaskRequest}
      * @since v0.4
      */
-    public task = (task: Omit<IRecaptchaV2TaskRequest, "type">) => task
+    public task = (
+        task: Omit<IRecaptchaV2TaskRequest, "type"> & {
+            proxy?: ProxyConfig
+        }
+    ) => task
 
     /**
      * Creates a recaptchav2 task for solving
@@ -52,13 +28,16 @@ export class RecaptchaV2Task extends UAProxy {
      * @since v0.4
      */
     public createWithTask = async (
-        task: Omit<IRecaptchaV2TaskRequest, "type">
+        task: Omit<IRecaptchaV2TaskRequest, "type"> & {
+            proxy?: ProxyConfig
+        }
     ): Promise<number> => {
+        const { proxy, ...rest } = task
         const data: IRecaptchaV2TaskRequest = {
             type: "RecaptchaV2Task",
-            ...task,
+            ...rest,
         }
-        const [proxyData] = this.isProxyTask(data)
+        const [proxyData] = this.isProxyTask(data, proxy)
         const [userAgentData] = this.isUserAgentTask(proxyData)
         return await this._createTask(userAgentData)
     }

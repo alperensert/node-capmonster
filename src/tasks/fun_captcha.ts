@@ -1,4 +1,4 @@
-import { UAProxy, ITask, ITaskSolution } from "../capmonster"
+import { UAProxy, ITask, ITaskSolution, ProxyConfig } from "../capmonster"
 
 export class FuncaptchaTask extends UAProxy {
     /**
@@ -10,42 +10,16 @@ export class FuncaptchaTask extends UAProxy {
     }
 
     /**
-     * Create task
-     * @returns ID of the created task
-     * @deprecated since v0.4 - use {@link task} & {@link createWithTask} instead
-     */
-    public createTask = async (
-        websiteUrl: string,
-        websitePublicKey: string,
-        apiJsSubdomain?: string,
-        dataBlob?: string,
-        cookies?: string | Array<unknown> | object,
-        noCache?: boolean
-    ): Promise<number> => {
-        console.warn(
-            "`createTask` is deprecated, use `task` & `createWithTask` to avoid errors in future versions"
-        )
-        const data: IFuncaptchaTaskRequest = {
-            type: "FunCaptchaTask",
-            websiteURL: websiteUrl,
-            websitePublicKey,
-            funcaptchaApiJSSubdomain: apiJsSubdomain,
-            cookies: cookies ? this.addCookies(cookies) : undefined,
-            data: dataBlob,
-            noCache,
-        }
-        const [proxyData] = this.isProxyTask(data)
-        const [userAgentData] = this.isUserAgentTask(proxyData)
-        return await this._createTask(userAgentData)
-    }
-
-    /**
      * Creates only the task configuration for reuseable tasks.
      * @param task {@link IFuncaptchaTaskRequest}
      * @returns Only the task you created {@link IFuncaptchaTaskRequest}
      * @since v0.4
      */
-    public task = (task: Omit<IFuncaptchaTaskRequest, "type">) => task
+    public task = (
+        task: Omit<IFuncaptchaTaskRequest, "type"> & {
+            proxy?: ProxyConfig
+        }
+    ) => task
 
     /**
      * Creates a fun captcha task for solving
@@ -54,13 +28,16 @@ export class FuncaptchaTask extends UAProxy {
      * @since v0.4
      */
     public createWithTask = async (
-        task: Omit<IFuncaptchaTaskRequest, "type">
+        task: Omit<IFuncaptchaTaskRequest, "type"> & {
+            proxy?: ProxyConfig
+        }
     ): Promise<number> => {
+        const { proxy, ...rest } = task
         const data: IFuncaptchaTaskRequest = {
             type: "FunCaptchaTask",
-            ...task,
+            ...rest,
         }
-        const [proxyData] = this.isProxyTask(data)
+        const [proxyData] = this.isProxyTask(data, proxy)
         const [userAgentData] = this.isUserAgentTask(proxyData)
         return await this._createTask(userAgentData)
     }

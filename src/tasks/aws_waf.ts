@@ -1,4 +1,4 @@
-import { ITask, ITaskSolution, UAProxy } from "../capmonster"
+import { ITask, ITaskSolution, ProxyConfig, UAProxy } from "../capmonster"
 
 export class AmazonTask extends UAProxy {
     /**
@@ -17,13 +17,14 @@ export class AmazonTask extends UAProxy {
      * @since v0.4.4
      */
     public createWithTask = async (
-        task: Omit<IAmazonTaskRequest, "type">
+        task: Omit<IAmazonTaskRequest, "type"> & { proxy?: ProxyConfig }
     ): Promise<number> => {
+        const { proxy, ...rest } = task
         const data: IAmazonTaskRequest = {
             type: "AmazonTask",
-            ...task,
+            ...rest,
         }
-        const [proxyData] = this.isProxyTask(data)
+        const [proxyData] = this.isProxyTask(data, proxy)
         const [userAgentData] = this.isUserAgentTask(proxyData)
         return await this._createTask(userAgentData)
     }
@@ -34,7 +35,9 @@ export class AmazonTask extends UAProxy {
      * @returns Only the task you created {@link IAmazonTaskRequest}
      * @since v0.4.4
      */
-    public task = (task: Omit<IAmazonTaskRequest, "type">) => task
+    public task = (
+        task: Omit<IAmazonTaskRequest, "type"> & { proxy?: ProxyConfig }
+    ) => task
 
     /**
      * Get task result

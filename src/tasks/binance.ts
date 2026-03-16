@@ -1,4 +1,4 @@
-import { ITask, ITaskSolution, UAProxy } from "../capmonster"
+import { ITask, ITaskSolution, ProxyConfig, UAProxy } from "../capmonster"
 
 export class BinanceTask extends UAProxy {
     /**
@@ -14,7 +14,9 @@ export class BinanceTask extends UAProxy {
      * @param task {@link IBinanceTaskRequest}
      * @returns Only the task you created {@link IBinanceTaskRequest}
      */
-    public task = (task: Omit<IBinanceTaskRequest, "type">) => task
+    public task = (
+        task: Omit<IBinanceTaskRequest, "type"> & { proxy?: ProxyConfig }
+    ) => task
 
     /**
      * Creates a Binance captcha task for solving
@@ -22,13 +24,14 @@ export class BinanceTask extends UAProxy {
      * @returns ID of the created task
      */
     public createWithTask = async (
-        task: Omit<IBinanceTaskRequest, "type">
+        task: Omit<IBinanceTaskRequest, "type"> & { proxy?: ProxyConfig }
     ): Promise<number> => {
+        const { proxy, ...rest } = task
         const data: IBinanceTaskRequest = {
             type: "BinanceTask",
-            ...task,
+            ...rest,
         }
-        const [proxyData] = this.isProxyTask(data)
+        const [proxyData] = this.isProxyTask(data, proxy)
         const [userAgentData] = this.isUserAgentTask(proxyData)
         return await this._createTask(userAgentData)
     }

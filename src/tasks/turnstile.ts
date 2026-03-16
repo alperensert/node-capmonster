@@ -1,4 +1,4 @@
-import { UAProxy, ITask, ITaskSolution } from "../capmonster"
+import { UAProxy, ITask, ITaskSolution, ProxyConfig } from "../capmonster"
 
 export class TurnstileTask extends UAProxy {
     /**
@@ -10,33 +10,16 @@ export class TurnstileTask extends UAProxy {
     }
 
     /**
-     * Create task
-     * @returns ID of the created task
-     * @deprecated since v0.4 - use {@link task} & {@link createWithTask} instead
-     */
-    public createTask = async (
-        websiteURL: string,
-        websiteKey: string
-    ): Promise<number> => {
-        console.warn(
-            "This function is deprecated, use `task` & `createWithTask` to avoid errors in future versions"
-        )
-        const data: ITurnstileTaskRequest = {
-            type: "TurnstileTask",
-            websiteKey,
-            websiteURL,
-        }
-        const [proxyData] = this.isProxyTask(data)
-        return await this._createTask(proxyData)
-    }
-
-    /**
      * Creates only the task configuration for reuseable tasks.
      * @param task {@link ITurnstileTaskRequest}
      * @returns Only the task you created {@link ITurnstileTaskRequest}
      * @since v0.4
      */
-    public task = (task: Omit<ITurnstileTaskRequest, "type">) => task
+    public task = (
+        task: Omit<ITurnstileTaskRequest, "type"> & {
+            proxy?: ProxyConfig
+        }
+    ) => task
 
     /**
      * Creates a turnstile task for solving
@@ -44,13 +27,16 @@ export class TurnstileTask extends UAProxy {
      * @returns ID of the created task
      */
     public createWithTask = async (
-        task: Omit<ITurnstileTaskRequest, "type">
+        task: Omit<ITurnstileTaskRequest, "type"> & {
+            proxy?: ProxyConfig
+        }
     ): Promise<number> => {
+        const { proxy, ...rest } = task
         const data: ITurnstileTaskRequest = {
             type: "TurnstileTask",
-            ...task,
+            ...rest,
         }
-        const [proxyData] = this.isProxyTask(data)
+        const [proxyData] = this.isProxyTask(data, proxy)
         return await this._createTask(proxyData)
     }
 

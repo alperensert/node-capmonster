@@ -1,4 +1,4 @@
-import { UAProxy, ITask, ITaskSolution } from "../capmonster"
+import { UAProxy, ITask, ITaskSolution, ProxyConfig } from "../capmonster"
 
 export class GeeTestTask extends UAProxy {
     /**
@@ -10,40 +10,16 @@ export class GeeTestTask extends UAProxy {
     }
 
     /**
-     * Create task
-     * @returns ID of the created task
-     * @deprecated since v0.4 - use {@link task} & {@link createWithTask} instead
-     */
-    public createTask = async (
-        websiteUrl: string,
-        gt: string,
-        challenge: string,
-        apiServerSubdomain?: string,
-        getLib?: string
-    ): Promise<number> => {
-        console.warn(
-            "This function is deprecated, use `task` & `createWithTask` to avoid errors in future versions"
-        )
-        const data: IGeeTestTaskRequest = {
-            type: "GeeTestTask",
-            websiteURL: websiteUrl,
-            gt,
-            challenge,
-            geetestApiServerSubdomain: apiServerSubdomain,
-            geetestGetLib: getLib,
-        }
-        const [proxyData] = this.isProxyTask(data)
-        const [userAgentData] = this.isUserAgentTask(proxyData)
-        return await this._createTask(userAgentData)
-    }
-
-    /**
      * Creates only the task configuration for reuseable tasks.
      * @param task {@link IGeeTestTaskRequest}
      * @returns Only the task you created {@link IGeeTestTaskRequest}
      * @since v0.4
      */
-    public task = (task: Omit<IGeeTestTaskRequest, "type">) => task
+    public task = (
+        task: Omit<IGeeTestTaskRequest, "type"> & {
+            proxy?: ProxyConfig
+        }
+    ) => task
 
     /**
      * Creates a gee test task for solving
@@ -52,13 +28,16 @@ export class GeeTestTask extends UAProxy {
      * @since v0.4
      */
     public createWithTask = async (
-        task: Omit<IGeeTestTaskRequest, "type">
+        task: Omit<IGeeTestTaskRequest, "type"> & {
+            proxy?: ProxyConfig
+        }
     ): Promise<number> => {
+        const { proxy, ...rest } = task
         const data: IGeeTestTaskRequest = {
             type: "GeeTestTask",
-            ...task,
+            ...rest,
         }
-        const [proxyData] = this.isProxyTask(data)
+        const [proxyData] = this.isProxyTask(data, proxy)
         const [userAgentData] = this.isUserAgentTask(proxyData)
         return await this._createTask(userAgentData)
     }

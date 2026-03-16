@@ -1,4 +1,4 @@
-import { ITask, ITaskSolution, UAProxy } from "../capmonster"
+import { ITask, ITaskSolution, ProxyConfig, UAProxy } from "../capmonster"
 
 export class ImpervaTask extends UAProxy {
     /**
@@ -15,7 +15,9 @@ export class ImpervaTask extends UAProxy {
      * @returns Only the task you created {@link IImpervaTaskRequest}
      */
     public task = (
-        task: Omit<IImpervaTaskRequest, "type" | "class">
+        task: Omit<IImpervaTaskRequest, "type" | "class"> & {
+            proxy?: ProxyConfig
+        }
     ) => task
 
     /**
@@ -25,13 +27,16 @@ export class ImpervaTask extends UAProxy {
      * @returns ID of the created task
      */
     public createWithTask = async (
-        task: Omit<IImpervaTaskRequest, "type" | "class">
+        task: Omit<IImpervaTaskRequest, "type" | "class"> & {
+            proxy?: ProxyConfig
+        }
     ): Promise<number> => {
+        const { proxy, ...rest } = task
         const data: IImpervaTaskRequest = {
             type: "CustomTask",
             class: "Imperva",
-            ...task,
-            ...this.proxy,
+            ...rest,
+            ...this.resolveProxy(proxy),
         }
         const [userAgentData] = this.isUserAgentTask(data)
         return await this._createTask(userAgentData)
